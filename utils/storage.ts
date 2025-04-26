@@ -55,6 +55,14 @@ export const getLoggedInUser = async () => {
   }
 };
 
+export const clearLoggedInUesr = async () => {
+  try {
+    await AsyncStorage.removeItem("user");
+  } catch (err) {
+    console.error("Error while clearing logged in user", err);
+  }
+};
+
 export const clearAsyncStorage = async () => {
   try {
     await AsyncStorage.clear();

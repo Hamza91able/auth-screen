@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { AuthContext } from "./AuthContext";
 import {
   clearAsyncStorage,
+  clearLoggedInUesr,
   getLoggedInUser,
   getUserData,
   saveLoggedInUser,
@@ -54,6 +55,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     router.replace("/login");
     setUser(null);
     if (clearStorage) await clearAsyncStorage();
+    else await clearLoggedInUesr();
   };
 
   const register = async (name: string, email: string, password: string) => {
