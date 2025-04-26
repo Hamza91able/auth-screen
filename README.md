@@ -14,6 +14,10 @@ This application contains the following features
 5. Clean & Sleak UI with support of ScrollView and KeyboardAvoidingView
 6. Password visibility toggle
 
+## Release
+You can get the preview build from the [release section](https://github.com/Hamza91able/auth-screen/releases/tag/preview)
+
+
 ## Get started
 
 1. Clone Repository
