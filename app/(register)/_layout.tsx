@@ -1,17 +1,17 @@
-import { Stack, useNavigation } from "expo-router";
+import { Stack, useNavigation, useRouter } from "expo-router";
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { IconButton } from "react-native-paper";
 
 function BackButton() {
-  const navigation = useNavigation();
+  const router = useRouter();
 
   return (
     <View>
       <IconButton
         icon="arrow-left-circle"
         size={32}
-        onPress={() => navigation.goBack()}
+        onPressIn={() => router.replace("/login")}
         iconColor="white"
         style={{
           marginTop: 30,
