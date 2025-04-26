@@ -58,7 +58,7 @@ export default function Register() {
     if (!validateEmail(registerData.email)) validators.email = true;
     else validators.email = false;
 
-    if (registerData.password.length < 8) validators.password = true;
+    if (registerData.password.length < 6) validators.password = true;
     else validators.password = false;
 
     if (registerData.password !== registerData.confirmPassword)
@@ -208,7 +208,7 @@ export default function Register() {
               },
             ]}
           >
-            <Text>At least 8 to 15 characters in length</Text>
+            <Text>At least 6 to 15 characters in length</Text>
           </View>
 
           <View
@@ -220,7 +220,7 @@ export default function Register() {
             ]}
           >
             {dangerTexts.password && (
-              <DangerText text="Password Needs to Be at Least 8 Characters" />
+              <DangerText text="Password Needs to Be at Least 6 Characters" />
             )}
           </View>
 

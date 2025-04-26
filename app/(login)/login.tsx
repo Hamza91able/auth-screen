@@ -48,7 +48,7 @@ export default function login() {
     if (!validateEmail(loginData.email)) validators.email = true;
     else validators.email = false;
 
-    if (loginData.password.length < 8) validators.password = true;
+    if (loginData.password.length < 6) validators.password = true;
     else validators.password = false;
 
     setDangerTexts(validators);
@@ -160,7 +160,7 @@ export default function login() {
             ]}
           >
             {dangerTexts.password && (
-              <DangerText text="Password Needs to Be at Least 8 Characters" />
+              <DangerText text="Password Needs to Be at Least 6 Characters" />
             )}
           </View>
 
