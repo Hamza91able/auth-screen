@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { AuthContext } from "./AuthContext";
 import {
+  clearAsyncStorage,
+  getLoggedInUser,
   getUserData,
+  saveLoggedInUser,
   saveUser,
   validateUserAlreadyExists,
 } from "@/utils/storage";
 import { hashPassword } from "@/utils/passwordUtils";
 import { ToastAndroid } from "react-native";
+import { User } from "@/constants/user.type";
+import { useRouter } from "expo-router";
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const router = useRouter();
+  const [user, setUser] = useState<User | null>(null);
+
   const login = async (email: string, password: string) => {
     try {
       const user: {
@@ -25,13 +33,25 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       ToastAndroid.show("Success", ToastAndroid.LONG);
 
-      return user;
+      setUser({
+        email: user.email,
+      });
+
+      await saveLoggedInUser({
+        email: user.email,
+      });
+
+      router.replace("/home");
     } catch (err) {
       console.error("Error while logging in user", err);
     }
   };
 
-  const logout = () => {};
+  const logout = async (clearStorage: boolean) => {
+    router.replace("/login");
+    setUser(null);
+    if (clearStorage) await clearAsyncStorage();
+  };
 
   const register = async (email: string, password: string) => {
     try {
@@ -49,8 +69,30 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const loggedInUser = async (): Promise<User | null> => {
+    try {
+      const user = await getLoggedInUser();
+
+      if (user) setUser(user);
+
+      return user;
+    } catch (error) {
+      console.error("Error retrieving logged in user data", error);
+      logout(false);
+      return null;
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ login, logout, register }}>
+    <AuthContext.Provider
+      value={{
+        login,
+        logout,
+        register,
+        user: user!!,
+        getLoggedInUser: loggedInUser,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

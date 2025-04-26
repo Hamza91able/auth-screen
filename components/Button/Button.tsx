@@ -1,13 +1,15 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { Animated, StyleProp, StyleSheet, ViewStyle } from "react-native";
 import { Button as RNButton } from "react-native-paper";
 
 export default function Button({
   text,
   onPress,
+  style = {},
 }: {
   text: string;
   onPress: () => void;
+  style?: Animated.WithAnimatedValue<StyleProp<ViewStyle>>;
 }) {
   return (
     <RNButton
@@ -18,7 +20,7 @@ export default function Button({
           primary: "white",
         },
       }}
-      style={[styles.button]}
+      style={[styles.button, style]}
     >
       {text}
     </RNButton>

@@ -71,7 +71,7 @@ export default function Register() {
   const onSubmit = () => {
     if (!validate()) return;
 
-    register(registerData.email, registerData.password);
+    register(registerData.email.toLowerCase(), registerData.password);
 
     router.replace("/login");
   };

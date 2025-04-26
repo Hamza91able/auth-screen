@@ -61,7 +61,7 @@ export default function login() {
     if (!validate()) return;
 
     try {
-      login(loginData.email, loginData.password);
+      login(loginData.email.toLowerCase(), loginData.password);
     } catch (err) {}
   };
 
