@@ -8,7 +8,7 @@ This application contains the following features
 
 ### Features
 1. Auth Context to handle authentication flow (Login, Signup, and Logout)
-2. React Navigation
+2. Expo Navigation
 3. Proper validations for all input fields
 4. Persistent Authentication using AsyncStorage
 5. Clean & Sleak UI with support of ScrollView and KeyboardAvoidingView
