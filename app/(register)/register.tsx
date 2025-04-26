@@ -15,6 +15,10 @@ import { validateEmail } from "@/validations/emailValidators";
 import { useAuth } from "@/context/AuthContext/useAuth";
 import { useRouter } from "expo-router";
 import { removeSpaces } from "@/utils/stringUtils";
+import {
+  MAX_PASSWORD_LENGTH,
+  MIN_PASSWORD_LENGTH,
+} from "@/constants/password.constants";
 
 export default function Register() {
   const theme = useTheme();
@@ -58,7 +62,8 @@ export default function Register() {
     if (!validateEmail(registerData.email)) validators.email = true;
     else validators.email = false;
 
-    if (registerData.password.length < 6) validators.password = true;
+    if (registerData.password.length < MIN_PASSWORD_LENGTH)
+      validators.password = true;
     else validators.password = false;
 
     if (registerData.password !== registerData.confirmPassword)
@@ -208,7 +213,10 @@ export default function Register() {
               },
             ]}
           >
-            <Text>At least 6 to 15 characters in length</Text>
+            <Text>
+              At least {MIN_PASSWORD_LENGTH} to {MAX_PASSWORD_LENGTH} characters
+              in length
+            </Text>
           </View>
 
           <View
@@ -220,7 +228,9 @@ export default function Register() {
             ]}
           >
             {dangerTexts.password && (
-              <DangerText text="Password Needs to Be at Least 6 Characters" />
+              <DangerText
+                text={`Password Needs to Be at Least ${MIN_PASSWORD_LENGTH} Characters`}
+              />
             )}
           </View>
 

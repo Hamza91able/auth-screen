@@ -1,3 +1,4 @@
+import { MAX_PASSWORD_LENGTH } from "@/constants/password.constants";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { TextInput } from "react-native-paper";
@@ -29,7 +30,7 @@ export default function PasswordInput({
           primary: "white",
         },
       }}
-      maxLength={15}
+      maxLength={MAX_PASSWORD_LENGTH}
       right={
         <TextInput.Icon
           icon={passwordVisiblity ? "eye" : "eye-off"}

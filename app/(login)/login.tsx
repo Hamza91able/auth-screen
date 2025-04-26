@@ -16,6 +16,7 @@ import { validateEmail } from "@/validations/emailValidators";
 import DangerText from "@/components/Text/DangerText";
 import { useAuth } from "@/context/AuthContext/useAuth";
 import { removeSpaces } from "@/utils/stringUtils";
+import { MIN_PASSWORD_LENGTH } from "@/constants/password.constants";
 
 export default function login() {
   const theme = useTheme();
@@ -48,7 +49,8 @@ export default function login() {
     if (!validateEmail(loginData.email)) validators.email = true;
     else validators.email = false;
 
-    if (loginData.password.length < 6) validators.password = true;
+    if (loginData.password.length < MIN_PASSWORD_LENGTH)
+      validators.password = true;
     else validators.password = false;
 
     setDangerTexts(validators);
@@ -160,7 +162,9 @@ export default function login() {
             ]}
           >
             {dangerTexts.password && (
-              <DangerText text="Password Needs to Be at Least 6 Characters" />
+              <DangerText
+                text={`Password Needs to Be at Least ${MIN_PASSWORD_LENGTH} Characters`}
+              />
             )}
           </View>
 
