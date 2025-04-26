@@ -17,6 +17,9 @@ This application contains the following features
 ## Release
 You can get the preview build from the [release section](https://github.com/Hamza91able/auth-screen/releases/tag/preview)
 
+## Short View Link
+[Video](https://drive.google.com/file/d/14v2JuViVfo5TryMnOB0gLp-SQu3C695A/view?usp=sharing)
+
 
 ## Get started
 
