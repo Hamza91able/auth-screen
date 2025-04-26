@@ -14,10 +14,12 @@ import Button from "@/components/Button/Button";
 import { useRouter } from "expo-router";
 import { validateEmail } from "@/validations/emailValidators";
 import DangerText from "@/components/Text/DangerText";
+import { useAuth } from "@/context/AuthContext/useAuth";
 
 export default function login() {
   const theme = useTheme();
   const router = useRouter();
+  const { login } = useAuth();
 
   const [loginData, setLoginData] = useState<{
     email: string;
@@ -49,10 +51,18 @@ export default function login() {
     else validators.password = false;
 
     setDangerTexts(validators);
+
+    if (validators.email === false && validators.password === false)
+      return true;
+    else return false;
   };
 
   const onSubmit = () => {
-    validate();
+    if (!validate()) return;
+
+    try {
+      login(loginData.email, loginData.password);
+    } catch (err) {}
   };
 
   return (

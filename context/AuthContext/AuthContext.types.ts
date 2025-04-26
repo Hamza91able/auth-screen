@@ -1,4 +1,5 @@
 export type AuthContextType = {
-  login: () => void;
+  login: (email: string, password: string) => void;
   logout: () => void;
+  register: (email: string, password: string) => void;
 };

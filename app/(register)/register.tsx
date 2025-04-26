@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import EmailInput from "@/components/TextInputs/EmailInput/EmailInput";
 import PasswordInput from "@/components/TextInputs/PasswordInput/PasswordInput";
 import {
@@ -12,9 +12,13 @@ import { useTheme, Text } from "react-native-paper";
 import Button from "@/components/Button/Button";
 import DangerText from "@/components/Text/DangerText";
 import { validateEmail } from "@/validations/emailValidators";
+import { useAuth } from "@/context/AuthContext/useAuth";
+import { useRouter } from "expo-router";
 
 export default function Register() {
   const theme = useTheme();
+  const router = useRouter();
+  const { register } = useAuth();
 
   const [registerData, setRegisterData] = React.useState<{
     email: string;
@@ -54,10 +58,22 @@ export default function Register() {
     else validators.confirmPassword = false;
 
     setDangerTexts(validators);
+
+    if (
+      validators.email === false &&
+      validators.password === false &&
+      validators.confirmPassword === false
+    )
+      return true;
+    else return false;
   };
 
   const onSubmit = () => {
-    validate();
+    if (!validate()) return;
+
+    register(registerData.email, registerData.password);
+
+    router.replace("/login");
   };
 
   return (
@@ -207,6 +223,19 @@ export default function Register() {
           <Button text="Sign Up" onPress={onSubmit} />
         </View>
       </ScrollView>
+      {/* <Snackbar
+        visible={true}
+        onDismiss={() => {}}
+        
+        action={{
+          label: "Undo",
+          onPress: () => {
+            // Do something
+          },
+        }}
+      >
+        Hey there! I'm a Snackbar.
+      </Snackbar> */}
     </KeyboardAvoidingView>
   );
 }
