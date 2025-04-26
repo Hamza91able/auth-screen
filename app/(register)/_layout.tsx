@@ -1,6 +1,6 @@
-import { Stack, useNavigation, useRouter } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import { IconButton } from "react-native-paper";
 
 function BackButton() {
