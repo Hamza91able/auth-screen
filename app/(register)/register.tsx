@@ -277,19 +277,6 @@ export default function Register() {
           <Button text="Sign Up" onPress={onSubmit} />
         </View>
       </ScrollView>
-      {/* <Snackbar
-        visible={true}
-        onDismiss={() => {}}
-        
-        action={{
-          label: "Undo",
-          onPress: () => {
-            // Do something
-          },
-        }}
-      >
-        Hey there! I'm a Snackbar.
-      </Snackbar> */}
     </KeyboardAvoidingView>
   );
 }
