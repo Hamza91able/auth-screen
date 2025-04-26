@@ -15,7 +15,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const user: {
         email: string;
         password: string;
-      } = await getUserData(email);
+      } | null = await getUserData(email);
+
+      if (!user) return alert("Invalid credentials");
 
       const hashedPassword = await hashPassword(password);
 
