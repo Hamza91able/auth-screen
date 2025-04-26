@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import EmailInput from "@/components/TextInputs/EmailInput/EmailInput";
+import TextInput from "@/components/TextInputs/TextInput/TextInput";
 import PasswordInput from "@/components/TextInputs/PasswordInput/PasswordInput";
 import {
   View,
@@ -15,6 +15,7 @@ import { useRouter } from "expo-router";
 import { validateEmail } from "@/validations/emailValidators";
 import DangerText from "@/components/Text/DangerText";
 import { useAuth } from "@/context/AuthContext/useAuth";
+import { removeSpaces } from "@/utils/stringUtils";
 
 export default function login() {
   const theme = useTheme();
@@ -38,7 +39,7 @@ export default function login() {
   });
 
   const onChange = (key: keyof typeof loginData, text: string) => {
-    setLoginData({ ...loginData, [key]: text.replace(/\s/g, "") });
+    setLoginData({ ...loginData, [key]: removeSpaces(text) });
   };
 
   const validate = () => {
@@ -112,9 +113,12 @@ export default function login() {
               },
             ]}
           >
-            <EmailInput
+            <TextInput
               onChange={(text) => onChange("email", text)}
               value={loginData.email}
+              label="Enter Email Address"
+              autoCapitalize="none"
+              keyboardType="email-address"
             />
           </View>
 

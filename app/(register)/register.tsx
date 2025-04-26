@@ -1,5 +1,5 @@
 import React from "react";
-import EmailInput from "@/components/TextInputs/EmailInput/EmailInput";
+import TextInput from "@/components/TextInputs/TextInput/TextInput";
 import PasswordInput from "@/components/TextInputs/PasswordInput/PasswordInput";
 import {
   View,
@@ -14,6 +14,7 @@ import DangerText from "@/components/Text/DangerText";
 import { validateEmail } from "@/validations/emailValidators";
 import { useAuth } from "@/context/AuthContext/useAuth";
 import { useRouter } from "expo-router";
+import { removeSpaces } from "@/utils/stringUtils";
 
 export default function Register() {
   const theme = useTheme();
@@ -21,31 +22,38 @@ export default function Register() {
   const { register } = useAuth();
 
   const [registerData, setRegisterData] = React.useState<{
+    name: string;
     email: string;
     password: string;
     confirmPassword: string;
   }>({
+    name: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
 
   const [dangerTexts, setDangerTexts] = React.useState<{
+    name: boolean;
     email: boolean;
     password: boolean;
     confirmPassword: boolean;
   }>({
+    name: false,
     email: false,
     password: false,
     confirmPassword: false,
   });
 
   const onChange = (key: keyof typeof registerData, text: string) => {
-    setRegisterData({ ...registerData, [key]: text.replace(/\s/g, "") });
+    setRegisterData({ ...registerData, [key]: text });
   };
 
   const validate = () => {
     const validators = { ...dangerTexts };
+
+    if (registerData.name.length < 3) validators.name = true;
+    else validators.name = false;
 
     if (!validateEmail(registerData.email)) validators.email = true;
     else validators.email = false;
@@ -60,6 +68,7 @@ export default function Register() {
     setDangerTexts(validators);
 
     if (
+      validators.name === false &&
       validators.email === false &&
       validators.password === false &&
       validators.confirmPassword === false
@@ -71,7 +80,11 @@ export default function Register() {
   const onSubmit = () => {
     if (!validate()) return;
 
-    register(registerData.email.toLowerCase(), registerData.password);
+    register(
+      registerData.name,
+      registerData.email.toLowerCase(),
+      registerData.password
+    );
 
     router.replace("/login");
   };
@@ -123,9 +136,40 @@ export default function Register() {
               },
             ]}
           >
-            <EmailInput
-              onChange={(text) => onChange("email", text)}
+            <TextInput
+              onChange={(text) => onChange("name", text)}
+              value={registerData.name}
+              label="Enter Name"
+            />
+          </View>
+
+          <View
+            style={[
+              {
+                flexDirection: "row",
+                marginTop: 10,
+                marginBottom: 30,
+              },
+            ]}
+          >
+            {dangerTexts.email && (
+              <DangerText text="Name needs to be at least 3 characters" />
+            )}
+          </View>
+
+          <View
+            style={[
+              {
+                flexDirection: "row",
+              },
+            ]}
+          >
+            <TextInput
+              onChange={(text) => onChange("email", removeSpaces(text))}
               value={registerData.email}
+              label="Enter Email Address"
+              autoCapitalize="none"
+              keyboardType="email-address"
             />
           </View>
 
@@ -152,7 +196,7 @@ export default function Register() {
           >
             <PasswordInput
               label="Password"
-              onChange={(text) => onChange("password", text)}
+              onChange={(text) => onChange("password", removeSpaces(text))}
               value={registerData.password}
             />
           </View>

@@ -11,9 +11,16 @@ export const validateUserAlreadyExists = async (email: string) => {
   }
 };
 
-export const saveUser = async (email: string, password: string) => {
+export const saveUser = async (
+  name: string,
+  email: string,
+  password: string
+) => {
   try {
-    await AsyncStorage.setItem(email, JSON.stringify({ email, password }));
+    await AsyncStorage.setItem(
+      email,
+      JSON.stringify({ name, email, password })
+    );
   } catch (err) {
     console.error("Error while saving user", err);
   }

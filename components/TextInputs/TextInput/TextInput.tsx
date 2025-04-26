@@ -1,19 +1,25 @@
 import React from "react";
-import { StyleSheet } from "react-native";
-import { TextInput } from "react-native-paper";
+import { KeyboardTypeOptions, StyleSheet } from "react-native";
+import { TextInput as RNTextInput } from "react-native-paper";
 
-export default function EmailInput({
+export default function TextInput({
   onChange,
   value,
+  autoCapitalize,
+  keyboardType,
+  label,
 }: {
   onChange: (text: string) => void;
   value: string;
+  label: string;
+  autoCapitalize?: "none" | "sentences" | "words" | "characters" | undefined;
+  keyboardType?: KeyboardTypeOptions | undefined;
 }) {
   return (
-    <TextInput
-      label="Enter Email Address"
-      keyboardType="email-address"
-      autoCapitalize="none"
+    <RNTextInput
+      label={label}
+      keyboardType={keyboardType}
+      autoCapitalize={autoCapitalize}
       mode="outlined"
       style={[styles.textInput]}
       cursorColor="white"

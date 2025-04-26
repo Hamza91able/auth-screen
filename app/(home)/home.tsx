@@ -1,6 +1,6 @@
 import Button from "@/components/Button/Button";
 import { useAuth } from "@/context/AuthContext/useAuth";
-import React, { useEffect } from "react";
+import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
 
@@ -25,7 +25,8 @@ export default function Home() {
       <Text variant="displaySmall" style={styles.welcomeText}>
         Hello! 👋
       </Text>
-      <Text variant="titleLarge">You are logged in as: {user.email}</Text>
+      <Text variant="titleLarge">You are logged in as: {user.name}</Text>
+      <Text variant="titleLarge">Email: {user.email}</Text>
 
       <View style={styles.logoutView}>
         <Button text="Logout!" onPress={() => handleLogout(false)} />
@@ -51,6 +52,6 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    height: "70%",
+    height: "60%",
   },
 });

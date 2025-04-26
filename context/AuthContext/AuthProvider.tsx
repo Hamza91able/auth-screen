@@ -21,6 +21,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const login = async (email: string, password: string) => {
     try {
       const user: {
+        name: string;
         email: string;
         password: string;
       } | null = await getUserData(email);
@@ -34,10 +35,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       ToastAndroid.show("Success", ToastAndroid.LONG);
 
       setUser({
+        name: user.name,
         email: user.email,
       });
 
       await saveLoggedInUser({
+        name: user.name,
         email: user.email,
       });
 
@@ -53,7 +56,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (clearStorage) await clearAsyncStorage();
   };
 
-  const register = async (email: string, password: string) => {
+  const register = async (name: string, email: string, password: string) => {
     try {
       const alreadyExists = await validateUserAlreadyExists(email);
 
@@ -61,7 +64,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       const hashedPassword = await hashPassword(password);
 
-      await saveUser(email, hashedPassword);
+      await saveUser(name, email, hashedPassword);
 
       ToastAndroid.show("Success", ToastAndroid.LONG);
     } catch (err) {
