@@ -2,11 +2,17 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { Button as RNButton } from "react-native-paper";
 
-export default function Button({ text }: { text: string }) {
+export default function Button({
+  text,
+  onPress,
+}: {
+  text: string;
+  onPress: () => void;
+}) {
   return (
     <RNButton
       mode="contained"
-      onPress={() => console.log("Pressed")}
+      onPress={onPress}
       theme={{
         colors: {
           primary: "white",

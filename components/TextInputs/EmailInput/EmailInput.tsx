@@ -2,7 +2,13 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { TextInput } from "react-native-paper";
 
-export default function EmailInput() {
+export default function EmailInput({
+  onChange,
+  value,
+}: {
+  onChange: (text: string) => void;
+  value: string;
+}) {
   return (
     <TextInput
       label="Enter Email Address"
@@ -11,6 +17,8 @@ export default function EmailInput() {
       mode="outlined"
       style={[styles.textInput]}
       cursorColor="white"
+      onChange={(e) => onChange(e.nativeEvent.text)}
+      value={value}
       theme={{
         roundness: 10,
         colors: {
@@ -23,7 +31,6 @@ export default function EmailInput() {
 
 const styles = StyleSheet.create({
   textInput: {
-    marginBottom: 30,
     width: "100%",
   },
 });
